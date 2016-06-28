@@ -8,25 +8,21 @@
 </head>
 <body ng-app="redditComments" ng-controller="MainController">
 
-
-    <div class="title" ng-repeat="comment in commentList" >
-        <div ng-click="getList(comment.data.id, $index)">
-            <div style="float:left">
-                <div>
-                    <i class="fa fa-arrow-down" ></i>
-                </div>
-                <div>
-                    <i class="fa fa-arrow-up" ></i>
-                </div>
-
-
-                </div>
-            <span>
-                  {{comment.data.title}}
-            </span>
+    <!--Title for each thread-->
+    <div class="title" ng-repeat="comment in commentList">
+        <div class="header" ng-click="getList(comment.data.id, $index)">
+            <div class="arrows" ng-click="voting()">
+                <i class="fa fa-arrow-up"></i>
+                <div></div>
+                <i class="fa fa-arrow-down"></i>
+            </div>
+            <div>{{comment.data.title}}</div>
         </div>
+        <div class="date">
+        {{(comment.data.created_utc * 1000) | date: 'medium' : 'UTC'}}
+         </div>
         <hr>
-
+    <!--Sorting type and order-->
         <div class="selections" ng-if="selected === $index">
             <span>
                 <span> Sort By
@@ -46,17 +42,42 @@
                 </span>
             </span>
         </div>
-
+        <!--List of comments for each thread-->
         <div class="comment" ng-repeat="comment in commentList[$index].comments  | orderBy: property:order">
-            {{comment.data.body}}
+            <div class="arrows" ng-click="voting()">
+                <i class="fa fa-arrow-circle-up"></i>
+                <div></div>
+                <i class="fa fa-arrow-circle-down"></i>
+            </div>
+            <div class="comment-header">
+                {{comment.data.author}}
+                {{(comment.data.created_utc * 1000) | date: 'short' : 'UTC'}}
+
+            </div>
+            <div class="comment-body">
+                  {{comment.data.body}}
+            </div>
+
         </div>
 
+        <!-- error modal for voting -->
+        <div id="votingError" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">
+                        <i class="fa fa-times-circle"></i>
+                    </span>
+                    <h2>Voting Error</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Voting here is not allowed. Please go to Reddit to cast your vote</p>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
 
+        </div>
 
     </div>
-
-
-
 
 </body>
 </html>

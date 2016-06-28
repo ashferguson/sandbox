@@ -3,33 +3,33 @@
 var app = angular.module('redditComments', []);
 
 app.controller('MainController', function($scope, Comments){
-    //
+
+    //On page load - retrieve all react threads
     (function getAllThread( ){
        Comments.getTitles().then(function(data){
            $scope.commentList = data;
        });
+
    })();
 
-
+    //when user clicks on title, get all the comments associated with it
     $scope.getList = function(id, index) {
+        //if user selects same thread as prior, do not do another call
         if($scope.selected === index){
             return;
         }
         $scope.selected = index;
         Comments.getComments(id).then(function (data) {
             $scope.commentList[index].comments = data[1].data.children;
+            //error handling for when no comments are available
             if(!data[1].data.children.length){
                 $scope.commentList[index].comments.push({data:{body: 'No Comments'}});
 
             }
-
         });
-
+        //default params for sorting
         $scope.commentList[index].property = 'ups';
         $scope.commentList[index].order = 'desc';
-
-
-
 
     };
 
@@ -45,9 +45,9 @@ app.controller('MainController', function($scope, Comments){
         else{
           $scope.order = false;
         }
+    };
 
-    }
-
+    //close comment boxes it user selects different thread
     $scope.$watch('selected', function (newValue, oldValue){
         if(oldValue === undefined){
             oldValue = newValue;
@@ -57,6 +57,28 @@ app.controller('MainController', function($scope, Comments){
         }
     });
 
+    //error modal for voting - no voting is allowed
+    $scope.voting = function(){
+        var modal = document.getElementById('votingError');
+
+        //open modal
+        var open = document.getElementsByClassName("arrows");
+        open.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        //close modal by x
+        var span = document.getElementsByClassName("close")[0];
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        //close modal by clicking anywhere
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
 })
 
 app.service('Comments', function($q, $http){
