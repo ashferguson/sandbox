@@ -6,13 +6,15 @@ app.controller('MainController', function($scope, Comments){
     //
     (function getAllThread( ){
        Comments.getTitles().then(function(data){
-           console.log(data);
            $scope.commentList = data;
        });
    })();
 
 
     $scope.getList = function(id, index) {
+        if($scope.selected === index){
+            return;
+        }
         $scope.selected = index;
         Comments.getComments(id).then(function (data) {
             $scope.commentList[index].comments = data[1].data.children;
@@ -47,7 +49,7 @@ app.controller('MainController', function($scope, Comments){
     }
 
     $scope.$watch('selected', function (newValue, oldValue){
-        if(oldValue === 'undefined'){
+        if(oldValue === undefined){
             oldValue = newValue;
         }
         else if(newValue){
