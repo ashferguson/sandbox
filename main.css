@@ -1,0 +1,20 @@
+.title {
+  padding: 5px 20px;
+  font-family: sans-serif;
+  color: black;
+
+}
+
+.selections {
+  padding: 0 20px;
+  font-family: sans-serif;
+  color: black;
+  font-size: 14px;
+}
+
+.comment {
+  padding: 5px 25px;
+  background-color: lightcyan;
+  border: darkcyan 1px solid;
+  margin: 10px;
+}

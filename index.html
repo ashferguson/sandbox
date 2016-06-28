@@ -1,0 +1,51 @@
+<html>
+<head>
+    <script type="text/javascript" src="node_modules/angular/angular.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+
+</head>
+<body ng-app="redditComments" ng-controller="MainController">
+
+
+    <div class="title" ng-repeat="comment in commentList" >
+        <div ng-click="getList(comment.data.id, $index)">
+            <li>{{comment.data.title}}</li>
+
+        </div>
+        <hr>
+
+        <div class="selections" ng-if="selected === $index">
+            <span>
+                <span> Sort By
+                    <select ng-model="commentList[$index].property" ng-change="setSort($index)">
+                        <option value="ups">Up Vote</option>
+                        <option value="created_utc">Time</option>
+                        <option value="score">Score</option>
+
+                    </select>
+                </span>
+                <span> Display Order
+                    <select ng-model="commentList[$index].order" ng-change="setOrder($index)">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+
+                    </select>
+                </span>
+            </span>
+        </div>
+
+        <div class="comment" ng-repeat="comment in commentList[$index].comments  | orderBy: property:order">
+            {{comment.data.body}}
+        </div>
+
+
+
+    </div>
+
+
+
+
+</body>
+</html>
