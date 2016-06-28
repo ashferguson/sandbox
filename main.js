@@ -58,14 +58,11 @@ app.controller('MainController', function($scope, Comments){
     });
 
     //error modal for voting - no voting is allowed
-    $scope.voting = function(){
+    $scope.votingModal = function(){
         var modal = document.getElementById('votingError');
 
         //open modal
-        var open = document.getElementsByClassName("arrows");
-        open.onclick = function() {
-            modal.style.display = "block";
-        }
+        modal.style.display = "block";
 
         //close modal by x
         var span = document.getElementsByClassName("close")[0];

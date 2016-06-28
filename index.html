@@ -11,7 +11,7 @@
     <!--Title for each thread-->
     <div class="title" ng-repeat="comment in commentList">
         <div class="header" ng-click="getList(comment.data.id, $index)">
-            <div class="arrows" ng-click="voting()">
+            <div class="arrows" ng-click="votingModal()">
                 <i class="fa fa-arrow-up"></i>
                 <div></div>
                 <i class="fa fa-arrow-down"></i>
@@ -44,7 +44,7 @@
         </div>
         <!--List of comments for each thread-->
         <div class="comment" ng-repeat="comment in commentList[$index].comments  | orderBy: property:order">
-            <div class="arrows" ng-click="voting()">
+            <div class="arrows" ng-click="votingModal()">
                 <i class="fa fa-arrow-circle-up"></i>
                 <div></div>
                 <i class="fa fa-arrow-circle-down"></i>
